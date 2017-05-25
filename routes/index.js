@@ -13,6 +13,10 @@ router.get('/author', function(req, res, next) {
     res.render('author');
 });
 
+router.get('/Ayuda', function(req, res, next) {
+    res.render('Ayuda');
+});
+
 
 // Autoload de rutas que usen :quizId
 router.param('quizId', quizController.load);
