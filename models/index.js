@@ -25,11 +25,6 @@ var sequelize = new Sequelize(url, {storage: storage});
 
 // Importar la definicion de la tabla Quiz de quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
-sequelize.sync().then(function () {
-    console.log("Creado");
-})
-    .catch(function (error) {
-        console.log("Error");
-    });
+
 
 exports.Quiz = Quiz; // exportar definición de tabla Quiz

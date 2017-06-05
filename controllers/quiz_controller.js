@@ -18,20 +18,20 @@ exports.random_play = function (req, res, next) {
                 for (var i in hechas){
                     if (hechas[i]===quizID){
                         res.render('quizzes/random_play',{
-                            score: contador})
+                            score: req.session.score})
                     } else if (hechas.length === quizzes.length) {
-                        res.render('quizes/random_nomore', {score: contador})
+                        res.render('quizes/random_nomore', {score: req.session.score})
                     } else {
                         hechas.push(quizID);
                     }
                 }
                 console.log("Aqui va"+hechas);
                 res.render('quizzes/random_play',{
-                    score: contador,
+                    score: req.session.score,
                     quiz: quiz
                 })
             } else {
-                res.render('quizes/random_nomore', {score: contador})
+                res.render('quizes/random_nomore', {score: req.session.score})
             }
             return models.Quiz.findById(quizID);
         })
@@ -213,12 +213,13 @@ exports.randomcheck = function (req, res, next) {
 
     var result = answer.toLowerCase().trim() === req.quiz.answer.toLowerCase().trim();
     if(result){
+req.session.score +=1;
         contador += 1;
-        resu=contador;
+        resu=req.session.score;
     }
      else {
-        var resu=contador;
-        contador=0;
+        var resu=req.session.score;
+        req.session.score=0;
     }
     res.render('quizzes/random_result',{
         score: resu,
