@@ -218,7 +218,7 @@ req.session.score +=1;
         resu=req.session.score;
     }
      else {
-        var resu=req.session.score;
+        var resu=0;
         req.session.score=0;
     }
     res.render('quizzes/random_result',{
