@@ -5,18 +5,20 @@ var Sequelize = require('sequelize');
 // Autoload la pista asociado a :tipId
 exports.load = function (req, res, next, tipId) {
 
-    models.Tip.findById(tipId)
-    .then(function (tip) {
-        if (tip) {
-            req.tip = tip;
-            next();
-        } else {
-            next(new Error('No existe tipId=' + tipId));
-        }
+    models.Tip.findById(tipId, {
+        include: [{model: models.User, as: 'Author'}]
     })
-    .catch(function (error) {
-        next(error);
-    });
+        .then(function (tip) {
+            if (tip) {
+                req.tip = tip;
+                next();
+            } else {
+                next(new Error('No existe tipId=' + tipId));
+            }
+        })
+        .catch(function (error) {
+            next(error);
+        });
 };
 
 
